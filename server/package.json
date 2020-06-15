@@ -1,0 +1,62 @@
+{
+  "name": "auth-poc-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start:server": "node server.js",
+    "start:server:watch": "nodemon -e yaml,js,json server.js",
+    "migrate": "db-migrate up",
+    "start": "npm-run-all migrate start:server",
+    "start-watch": "npm-run-all migrate start:server:watch",
+    "tests:setup-db": "docker-compose up test_db",
+    "tests:migrate-db": "db-migrate up -e test",
+    "test": "jest --testRunner='jest-circus/runner'",
+    "test-watch": "jest --watch .",
+    "lint": "semistandard --fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testRunner": "jest-circus/runner",
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setupTests.js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  },
+  "semistandard": {
+    "env": [
+      "node",
+      "jest"
+    ],
+    "ignore": [
+      "migrations/**"
+    ]
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "npm-run-all": "^4.1.5",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "husky": "^4.2.5",
+    "jest": "^26.0.1",
+    "jest-circus": "^26.0.1",
+    "nodemon": "^2.0.4",
+    "supertest": "^4.0.2",
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-ui-express": "^4.1.4"
+  }
+}

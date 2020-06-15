@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  db:
+    image: 'mysql:5.7'
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=auth_poc_api_database
+    volumes: 
+      - auth_poc-db:/var/lib/mysql
+  web:
+    depends_on:
+      - db
+    build: '.'
+    environment:
+      - DB_USER=root
+      - DB_PASS=root
+      - DB_NAME=auth_poc_api_database
+      - DB_HOST=db
+      - DB_PORT=3306
+    ports:
+      - "3000:3000"
+    command: 'bash -c "chmod u+x ./wait-for-it.sh && ./wait-for-it.sh db:3306 && npm start"'
+  
+volumes:
+  auth_poc-db:
