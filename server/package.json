@@ -11,7 +11,7 @@
     "start-watch": "npm-run-all migrate start:server:watch",
     "tests:setup-db": "docker-compose up test_db",
     "tests:migrate-db": "db-migrate up -e test",
-    "test": "jest --testRunner='jest-circus/runner'",
+    "test": "jest --testRunner='jest-circus/runner' --maxWorkers=1",
     "test-watch": "jest --watch .",
     "lint": "semistandard --fix"
   },
@@ -43,9 +43,12 @@
   "license": "ISC",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
+    "argon2": "^0.26.2",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-jwt": "^5.3.3",
+    "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "npm-run-all": "^4.1.5",
     "yamljs": "^0.3.0"

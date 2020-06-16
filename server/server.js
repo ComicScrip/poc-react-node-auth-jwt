@@ -1,11 +1,11 @@
+require('dotenv').config();
 const express = require('express');
-const swaggerUi = require('swagger-ui-express');
 const cors = require('cors');
-const YAML = require('yamljs');
-const swaggerDocument = YAML.load('./docs/swagger.yaml');
+const extractToken = require('./middlewares/extractToken')
+const requireAuth = require('./middlewares/requireAuth')
 
 const app = express();
-const PORT = process.env.PORT || (process.env.NODE_ENV === 'test' ? 3001 : 3000);
+const PORT = process.env.PORT || (process.env.NODE_ENV === 'test' ? 4000 : 3000);
 
 process.on('unhandledRejection', error => {
   console.error('unhandledRejection', JSON.stringify(error), error.stack);
@@ -24,12 +24,16 @@ process.on('beforeExit', () => {
 // middlewares
 app.use(express.json());
 app.use(cors());
-if (process.env.NODE_ENV !== 'production') {
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-}
-app.use('/tasks', require('./routes/task.routes.js'));
-app.use('/', (req, res) => { res.redirect('/tasks'); });
+app.use(extractToken)
+app.use('/users', require('./routes/user.routes.js'));
+app.use('/auth', require('./routes/auth.routes.js'));
+app.use('/secret', requireAuth, require('./routes/secret.routes.js'));
 
+app.use((err, req, res, next) => {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401).send('invalid token...');
+  }
+});
 app.use((error, req, res, next) => {
   console.error(error.stack);
   res.status(500).send('Something Broke!');
