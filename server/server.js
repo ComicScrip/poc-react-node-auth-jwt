@@ -24,10 +24,9 @@ process.on('beforeExit', () => {
 // middlewares
 app.use(express.json());
 app.use(cors());
-app.use(extractToken)
 app.use('/users', require('./routes/user.routes.js'));
 app.use('/auth', require('./routes/auth.routes.js'));
-app.use('/secret', requireAuth, require('./routes/secret.routes.js'));
+app.use('/secret', require('./routes/secret.routes.js'));
 
 app.use((err, req, res, next) => {
   if (err.name === 'UnauthorizedError') {

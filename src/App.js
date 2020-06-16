@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import './App.css';
-import AuthContext from './authContext'
 import jwtDecode from 'jwt-decode'
 
 import {
@@ -8,9 +7,7 @@ import {
   Switch,
   Route,
   Link,
-  Redirect,
-  useHistory,
-  useLocation
+  Redirect
 } from "react-router-dom";
 
 import LoginPage from './LoginPage'
@@ -20,7 +17,8 @@ import SecretPage from './SecretPage'
 // A wrapper for <Route> that redirects to the login
 // screen if you're not yet authenticated.
 function PrivateRoute({ children, ...rest }) {
-  const {token} = useContext(AuthContext)
+  // const {token} = useContext(AuthContext)
+  const token = null
   return (
     <Route
       {...rest}
@@ -49,18 +47,17 @@ function App() {
 
   let userNameFromToken = null
   if (token) {
-    userNameFromToken = jwtDecode(token).name || null
+    userNameFromToken = jwtDecode(token).sub || null
   }
 
   return (
-    <AuthContext.Provider value={{token, setToken: setTokenInLocalStorage}}>
-      {userNameFromToken && 
-        <div>
-          <p>Welcome back {userNameFromToken} !</p>
-          <button onClick={() => setTokenInLocalStorage('')}>Log out</button>
-        </div>
-      }
-      <div className="App">
+    <div className="App">
+        {userNameFromToken && 
+          <div>
+            <p>Welcome back {userNameFromToken} !</p>
+            <button onClick={() => setTokenInLocalStorage('')}>Log out</button>
+          </div>
+        }
         <Router>
         <div>
           <nav>
@@ -90,7 +87,6 @@ function App() {
         </div>
       </Router>
       </div>
-    </AuthContext.Provider>
   );
 }
 
