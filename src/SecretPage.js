@@ -13,7 +13,7 @@ export default function SecretPage(props) {
     })
   }, [])
 
-  if (error) return error 
+  if (error) return <div>an error occured</div>
   return (
     <div>
       The secret is {secret}

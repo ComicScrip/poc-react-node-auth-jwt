@@ -26,10 +26,10 @@ services:
       - DB_PASS=root
       - DB_NAME=auth_poc_api_database
       - DB_HOST=db
-      - DB_PORT=3306
+      - DB_PORT=3307
     ports:
       - "3000:3000"
-    command: 'bash -c "chmod u+x ./wait-for-it.sh && ./wait-for-it.sh db:3306 && npm start"'
+    command: 'bash -c "chmod u+x ./wait-for-it.sh && ./wait-for-it.sh db:3307 && npm start"'
   
 volumes:
   auth_poc-db:

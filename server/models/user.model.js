@@ -31,7 +31,7 @@ class User {
         throw new Error('incorrect password')
       } else {
         const data = {name: user.name, id: user.id}
-        const token = jwt.sign(data, JWT_PRIVATE_KEY, {expiresIn: '24h'})
+        const token = jwt.sign(data, JWT_PRIVATE_KEY, {expiresIn: '10s'})
         return Promise.resolve(token)
       }
     }
