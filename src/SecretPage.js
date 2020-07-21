@@ -9,9 +9,9 @@ export default function SecretPage(props) {
     API.get('/secret').then(res => res.data).then(data => {
       setSecret(data.secret)
     }).catch(err => {
-      setError('Unauthorized')
+      setError(err)
     })
-  })
+  }, [])
 
   if (error) return error 
   return (

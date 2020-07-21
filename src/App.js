@@ -53,7 +53,7 @@ function App() {
   }
 
   return (
-    <AuthContext.Provider value={{token, setToken: setTokenInLocalStorage}}>
+    <AuthContext.Provider value={{token, saveToken: setTokenInLocalStorage}}>
       {userNameFromToken && 
         <div>
           <p>Welcome back {userNameFromToken} !</p>

@@ -7,7 +7,7 @@ describe('secret endpoints', () => {
   describe('GET /secret', () => {
     it('should get secret with valid token', async () => {
       await User.create('john doe', 'john.doe@gmail.com', 'admin123')
-      const {token} = await User.login('john.doe@gmail.com', 'admin123')
+      const token = await User.login('john.doe@gmail.com', 'admin123')
       await request(app).get('/secret')
         .set('Authorization', `Bearer ${token}`)
         .expect(200)

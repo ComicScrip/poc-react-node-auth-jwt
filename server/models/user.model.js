@@ -32,7 +32,7 @@ class User {
       } else {
         const data = {name: user.name, id: user.id}
         const token = jwt.sign(data, JWT_PRIVATE_KEY, {expiresIn: '24h'})
-        return Promise.resolve({token, data})
+        return Promise.resolve(token)
       }
     }
   }

@@ -8,9 +8,8 @@ export default function RegisterPage(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    const payload = {name, email, password}
-    API.post('/users', payload).then((res) => {
-      alert('registered !')
+    API.post('/users', {email, name, password}).then(res => {
+      alert('registered !');
     })
   }
 

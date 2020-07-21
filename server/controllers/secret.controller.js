@@ -1,6 +1,6 @@
 class secretController {
   static async show (req, res) {
-    res.send({secret: 42})
+    res.send({secret: req.currentUser.name})
   }
 }
 
